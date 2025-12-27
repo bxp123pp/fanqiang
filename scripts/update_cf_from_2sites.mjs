@@ -76,8 +76,8 @@ async function fetchWetestByCarrier() {
 async function fetchHostmonitByCarrier() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.goto(HOSTMONIT_URL, { waitUntil: "networkidle", timeout: 60_000 });
-  await page.waitForSelector("table", { timeout: 60_000 });
+await page.goto(HOSTMONIT_URL, { waitUntil: "domcontentloaded", timeout: 120_000 });
+await page.waitForSelector("table tbody tr", { timeout: 120_000 });
 
   const rows = await page.$$eval("table tbody tr", (trs) =>
     trs.map((tr) => Array.from(tr.querySelectorAll("td")).map((td) => td.textContent?.trim() || ""))
